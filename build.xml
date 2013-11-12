@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="struts2_demo">
+    <property environment="env"/>
+    <property name="ECLIPSE_HOME" value="C:/Users/liche/AppData/Local/Genuitec/MyEclipse-8.6"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+    <path id="Java EE 5 Libraries.libraryclasspath">
+        <pathelement location="C:/Users/liche/AppData/Local/Genuitec/Common/plugins/com.genuitec.eclipse.j2eedt.core_8.6.0.me201007292038/data/libraryset/EE_5/javaee.jar"/>
+        <pathelement location="C:/Users/liche/AppData/Local/Genuitec/Common/plugins/com.genuitec.eclipse.j2eedt.core_8.6.0.me201007292038/data/libraryset/EE_5/jsf-impl.jar"/>
+        <pathelement location="C:/Users/liche/AppData/Local/Genuitec/Common/plugins/com.genuitec.eclipse.j2eedt.core_8.6.0.me201007292038/data/libraryset/EE_5/jsf-api.jar"/>
+        <pathelement location="C:/Users/liche/AppData/Local/Genuitec/Common/plugins/com.genuitec.eclipse.j2eedt.core_8.6.0.me201007292038/data/libraryset/EE_5/jstl-1.2.jar"/>
+    </path>
+    <path id="struts2_demo.classpath">
+        <pathelement location="WebRoot/WEB-INF/classes"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+        <pathelement location="WebRoot/WEB-INF/lib/ognl-3.0.5.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/struts2-core-2.3.4.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/xwork-core-2.3.4.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-collections-3.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-fileupload-1.2.2.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-io-2.0.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-lang3-3.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/javassist-3.11.0.GA.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/struts2-json-plugin-2.3.12.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/json-lib-2.4-jdk15.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-lang-2.3.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/ezmorph-1.0.3.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/commons-logging-1.0.4.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/antlr-2.7.6.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/c3p0-0.9.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/hibernate3.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/javassist-3.12.0.GA.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/jta-1.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/ojdbc14.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/slf4j-api-1.6.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/slf4j-nop-1.6.1.jar"/>
+        <pathelement location="WebRoot/WEB-INF/lib/ant-1.6.5.jar"/>
+    </path>
+    <path id="run.execShell.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.XmlStringAction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <target name="init">
+        <mkdir dir="WebRoot/WEB-INF/classes"/>
+        <copy includeemptydirs="false" todir="WebRoot/WEB-INF/classes">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="WebRoot/WEB-INF/classes"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="WebRoot/WEB-INF/classes" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="struts2_demo.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="execShell">
+        <java classname="com.test.json.dao.execShell" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.execShell.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="XmlStringAction">
+        <java classname="com.test.json.action.XmlStringAction" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.XmlStringAction.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+</project>

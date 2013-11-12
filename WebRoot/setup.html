@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+	<script language="javascript" type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+	<script src="jquery-upload/jquery.ui.widget.js"></script>
+	<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+	<script src="jquery-upload/jquery.iframe-transport.js"></script>
+	<!-- The basic File Upload plugin -->
+	<script src="jquery-upload/jquery.fileupload.js"></script>
+	<!-- The File Upload processing plugin -->
+	<script src="jquery-upload/jquery.fileupload-process.js"></script>
+	<!-- The File Upload image preview & resize plugin -->
+	<script src="jquery-upload/jquery.fileupload-image.js"></script>
+	<!-- The File Upload audio preview plugin -->
+	<script src="jquery-upload/jquery.fileupload-audio.js"></script>
+	<!-- The File Upload video preview plugin -->
+	<script src="jquery-upload/jquery.fileupload-video.js"></script>
+	<!-- The File Upload validation plugin -->
+	<script src="jquery-upload/jquery.fileupload-validate.js"></script>
+	<!-- The File Upload user interface plugin -->
+	<script src="jquery-upload/jquery.fileupload-ui.js"></script>
+	<script>
+		$(function () {
+			 $('#fileupload').fileupload({
+       			 dataType: 'json',
+       			 url:'uploadFile.action',
+       			 formData:{"folderName":'test'},
+        		 add: function (e, data) {
+        		 	$('.btn.upload').text('Upload');
+        		 	$('.btn.upload').removeClass("hide");
+            	 	data.context = $('.btn.upload')
+//                  		.appendTo(document.body)
+                		.click(function () {
+                 					data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                 					data.submit();
+                		});
+        		},
+       			done: function (e, data) {
+            		data.context.text('Upload finished.');
+        		},
+        		drop: function (e, data) {
+        			//$("li:not('.template')").remove();
+        			console.log(data);
+       				$.each(data.files, function (index, file) {
+            		//alert('Dropped file: ' + file.name);
+            			console.log(file);
+            			$li=$("li.template").clone();
+            			//$("ul").remove($("li not('.template')"));
+            			$li.text(file.name).appendTo($("ul.files")).removeClass("hide").removeClass("template");
+        			});
+    			},
+    			progressall: function (e, data) {
+        			var progress = parseInt(data.loaded / data.total * 100, 10);
+        			$('.progress').show();
+       				$('.progress .bar').css(
+            			'width',
+           				 progress + '%'
+        			);
+    			}
+    		});
+		});
+	</script>
+  </head>  
+  <body>
+    <span class="btn btn-success fileinput-button">
+         <span>Add files...</span>
+         <input type="file" name="grand" id="fileupload">
+    </span>
+	<!-- The main application script -->
+	<!--script src="jquery-upload/main.js"></script-->
+	<ul class="files">
+		<li class="hide template">1</li>
+	</ul>
+	<button class="hide btn btn-info upload" type="button">test</button>
+	<div class="progress" style="display:none">
+  		<div class="bar" style="width: 0%;"></div>
+	</div>
+  </body>
+</html>

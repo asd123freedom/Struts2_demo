@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>控制台</title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/messenger.css" rel="stylesheet" media="screen">
+    <link href="css/messenger-theme-future.css" rel="stylesheet" media="screen">
+    <script language="javascript" type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script language="javascript" type="text/javascript" src="js/underscore-1.4.4.js"></script>
+    <script language="javascript" type="text/javascript" src="js/backbone-0.9.10.js"></script>
+    <script language="javascript" type="text/javascript" src="js/messenger.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+<script type="text/javascript">
+			var klass = function(Parent, props) {  
+    			var Child, F, i;  
+    			// 1.  
+    			// new constructor  
+    			Child = function() {  
+        			if (Child.uber && Child.uber.hasOwnProperty("__construct")) {  
+           				 Child.uber.__construct.apply(this, arguments);  
+        			}  
+        			if (Child.prototype.hasOwnProperty("__construct")) {  
+            			Child.prototype.__construct.apply(this, arguments);  
+        			}  
+   				};  
+			    // 2.  
+			    // inherit  
+			    Parent = Parent || Object;  
+			    F = function() {};  
+			    F.prototype = Parent.prototype;  
+			    Child.prototype = new F();  
+			    Child.uber = Parent.prototype;  
+			    Child.prototype.constructor = Child;  
+			    // 3.  
+			    // add implementation methods  
+			    for (i in props) {  
+			        if (props.hasOwnProperty(i)) {  
+			            Child.prototype[i] = props[i];  
+			        }  
+			    }  
+			    // return the "class"  
+			    return Child;  
+			};  
+			$(document).ready(function(){
+				var dat="";
+				$.ajax({
+						url: "http://127.0.0.1:8080/struts2_demo/Console.action",
+         				type: "POST",
+         				data: {"command":dat},
+         				success:function(data){
+         					
+         				}, 
+				});		
+			}); 
+</script>
+  <body>
+  		<div class="row-fluid" style="margin-top:50px">
+  			<div class="span6">
+  				<div class="row-fluid">
+  					<div class="span1">
+  					</div>
+  					<div class="span3">
+  						<input type="text" class="span12" style=""/>
+  					</div>
+  					<div class="span3">
+  						<button type="button" class="btn btn-info">Submit</button>
+  					</div>
+  				</div>  			
+    		</div>
+  			<div class="span6">
+  				<ul>
+  					<li class="hide template">1</li>
+  				</ul>
+  			</div>
+  		</div>  		  		  
+  </body>
+</html>

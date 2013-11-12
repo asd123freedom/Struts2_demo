@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="struts2" location="10,10" size="225,242">
+    <action name="login" location="65,47" size="150,41">
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="Test" location="10,170" size="150,62">
+      <result name="success" />
+      <result name="login">
+        <resourceEdge source="login" routing="0" target="login.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="default" location="350,200" size="170,321">
+    <action name="jsontest" location="10,20" size="150,104">
+      <result name="message" />
+      <result name="userInfo" />
+      <result name="list" />
+      <result name="map" />
+    </action>
+    <action name="graphtest" location="10,170" size="150,41">
+      <result name="info" />
+    </action>
+    <action name="uploadFile" location="10,270" size="150,41">
+      <result name="success" />
+    </action>
+    <action name="download" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="delete" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="Monitor" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="Save" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="Console" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="XmlString" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+  </package>
+  <webResource name="error.jsp" path="/error.jsp" location="100,205" size="150,55" />
+  <webResource name="index.jsp" path="/index.jsp" location="200,350" size="150,55" />
+  <webResource name="login.jsp" path="/login.jsp" location="350,350" size="150,55" />
+  <webResource name="body1.jsp" path="/body1.jsp" location="500,350" size="150,55" />
+</Struts2Diagram>
+

@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>上传文件</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>upload</title>
+<link href="upload1/uploadify.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="upload1/jquery.uploadify.js"></script>
+<script type="text/javascript">
+        $(document).ready(function()
+        {
+            $("#uploadify").uploadify({
+              swf  : 'upload1/uploadify.swf',
+			  uploader    : 'uploadFile.action',
+		      cancelImg : 'upload1/cancel.png',
+		      fileTypeExts : '*.txt;*.doc;*.ppt;*.pptx;*.docx;*.xls;*.xlsx;*.pdf;*.zip;*.rar;*.tar;*.jpg;*.jpeg;*.png;*.gif;*.bmp',
+		      fileTypeDesc : '所有附件',
+		      fileObjName :'grand',
+		      formData:{"folderName":window.opener.getFolderName()},
+	          multi : false,
+	          auto  : true,
+			  'onUploadComplete' : function(file) {
+            		//alert('The file ' + file.name + ' finished processing.');
+            		//window.opener.$("#send_a_file").data("fileName",file.name);
+			  		//window.opener.sendFileName();
+			  		$("p").text("现在可以关闭此页面");
+        	  }
+            });
+        });  
+    </script>
+</head>
+<body>
+	<div id="fileQueue"></div>
+    <input id="uploadify" type="file" name="myfile" value="选择文件"/>
+    <p></p>
+</body>
+</html>

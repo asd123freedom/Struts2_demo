@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>testForJS.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  <script type="text/javascript">
+  	var one = {  
+    name: "object",  
+    say: function(greet) {
+    	console.log(greet)  
+        return greet + ", " + this.name;  
+    }  
+	};  
+  	var two = {  
+    name: "another object"  
+	};
+	{  
+    Function.prototype.bind = function(thisArg) {  
+        var fn = this;
+        console.log(thisArg);  
+        slice = Array.prototype.slice;
+        args = slice.call(arguments, 1);
+        console.log(arguments);
+        console.log(args);
+        console.log(args.concat(slice.call(arguments)));  
+        return function() {  
+            return fn.apply(thisArg, args.concat(slice.call(arguments)));  
+        };  
+    };  
+	}
+	//var twosay2 = one.say.bind(two);  
+	//twosay2('Bonjour'); // "Bonjour, another object"
+	var twosay3 = one.say.bind(two, 'Enchanté');  
+	twosay3(); // "Enchanté, another object"        
+  </script>
+  <body>
+    This is my HTML page. <br>
+  </body>
+</html>
