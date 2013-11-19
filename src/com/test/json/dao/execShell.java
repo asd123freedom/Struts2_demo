@@ -24,9 +24,9 @@ public class execShell {
 		try {
 			es.pro = es.runTime.exec(command);
 			BufferedReader input = new BufferedReader(new InputStreamReader(
-					es.pro.getInputStream()));// 这个输入流是获取shell输出的
+					es.pro.getInputStream(),"gbk"));// 这个输入流是获取shell输出的
 			BufferedReader input2 = new BufferedReader(new InputStreamReader(
-					es.pro.getErrorStream()));// 这个输入流是获取shell错误输出的
+					es.pro.getErrorStream(),"gbk"));// 这个输入流是获取shell错误输出的
 			PrintWriter output = new PrintWriter(new OutputStreamWriter(es.pro
 					.getOutputStream()));// 这个输出流主要是对Process进行输入控制用的
 			String line;
@@ -42,8 +42,10 @@ public class execShell {
 //					output.flush();// 输入完成之后一定要flush。否则一直处在等待输入的地方
 //				}
 			}
-			while ((line = input.readLine()) != null) {
+			line = input.readLine();
+			while ( line!= null) {
 				System.out.println(line);
+				line=input.readLine();
 			}
 			input.close();
 			input2.close();
