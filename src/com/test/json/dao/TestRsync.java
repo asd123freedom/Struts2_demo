@@ -12,7 +12,8 @@ public class TestRsync {
 		ArrayList<Long> list=new ArrayList<Long>();
 		Map hm=new HashMap<Long, ArrayList<String>>();
 		for(int i=0;i<line.length()/4;i++){
-			String temp=line.substring(i*4,i*4+3);
+			String temp=line.substring(i*4,i*4+4);
+			System.out.println(temp);
 			long l=adler32(temp.getBytes());
 			ArrayList<String> list2=null;
 			if(hm.containsKey(l)){
@@ -20,22 +21,47 @@ public class TestRsync {
 			}else{
 				list2=new ArrayList<String>();
 			}
-			list2=new ArrayList<String>();
+			list2.add(temp);
+			hm.put(l, list2);
 			list.add(l);
-
 		}
-		String test1="Wiki";
-		String test2="ikip";
-		System.out.println(adler32(test.getBytes()));
-		long csum=adler32(test1.getBytes());
-		byte c1='W';
-		byte c2='p';
-		long csum3=adler32(test2.getBytes());
-		long csum4=adler32_rolling_checksum(csum,test2.length(),c1,c2);
-		//long csum2=checkSum_Adler32(test2.getBytes(),4);
-		//System.out.println(csum2);
-		System.out.println(csum3);
-		System.out.println(csum4);
+		String left=line.substring((line.length()/4)*4);
+		System.out.println(left);
+		byte[] b=line2.getBytes();
+		long checksum=0;
+		int start=0;
+		int end=0;
+		for(int i=0;i<b.length-3;i++){
+			StringBuffer sb=new StringBuffer("");
+			sb.append((char)b[i]);
+			sb.append((char)b[i+1]);
+			sb.append((char)b[i+2]);
+			sb.append((char)b[i+3]);
+			//System.out.println(sb.toString());
+			if(i==0){
+				checksum=adler32(sb.toString().getBytes());
+			}else{
+				checksum=adler32_rolling_checksum(checksum,sb.toString().length(),b[i-1],b[i+3]);
+			}
+			if(list.contains(checksum)){
+				System.out.println("find:"+sb.toString());
+				end=i;
+				System.out.println("need to send:"+line2.substring(start,end));
+				start=i+4;
+			}
+		}
+//		String test1="Wiki";
+//		String test2="ikip";
+//		System.out.println(adler32(test.getBytes()));
+//		long csum=adler32(test1.getBytes());
+//		byte c1='W';
+//		byte c2='p';
+//		long csum3=adler32(test2.getBytes());
+//		long csum4=adler32_rolling_checksum(csum,test2.length(),c1,c2);
+//		//long csum2=checkSum_Adler32(test2.getBytes(),4);
+//		//System.out.println(csum2);
+//		System.out.println(csum3);
+//		System.out.println(csum4);
 	}
 	public static long adler32(byte[] data){
 		long a = 0, b = 0;
