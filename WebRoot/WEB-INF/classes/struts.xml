@@ -61,6 +61,9 @@
          </action> 
          <action name="Tree"  class="com.test.json.action.TreeAction">
               <result type="json"></result> 
-         </action>       
+         </action>
+         <action name="FileList"  class="com.test.json.action.GetFileListAction">
+              <result type="json"></result> 
+         </action>        
     </package> 
 </struts>

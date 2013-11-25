@@ -2,7 +2,10 @@ package com.test.json.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestRsync {
 	public static void main(String[] args) {
@@ -31,8 +34,12 @@ public class TestRsync {
 		long checksum=0;
 		int start=0;
 		int end=0;
+		StringBuffer result=new StringBuffer("");
+		String left2 = null;
+		StringBuffer sb=null;
+		List list2=new ArrayList<Object>();
 		for(int i=0;i<b.length-3;i++){
-			StringBuffer sb=new StringBuffer("");
+			sb=new StringBuffer("");
 			sb.append((char)b[i]);
 			sb.append((char)b[i+1]);
 			sb.append((char)b[i+2]);
@@ -47,9 +54,20 @@ public class TestRsync {
 				System.out.println("find:"+sb.toString());
 				end=i;
 				System.out.println("need to send:"+line2.substring(start,end));
+				String add=line2.substring(start,end);
+				Long find=Long.valueOf(checksum);
+				list2.add(add);
+				list2.add(find);
+				result.append(add+find);
 				start=i+4;
+				left2=line2.substring(start);
 			}
 		}
+		System.out.println(left2);
+		result.append(left2);
+		list2.add(left2);
+		System.out.println(result.toString());
+		assemble(hm,list2);
 //		String test1="Wiki";
 //		String test2="ikip";
 //		System.out.println(adler32(test.getBytes()));
@@ -62,6 +80,21 @@ public class TestRsync {
 //		//System.out.println(csum2);
 //		System.out.println(csum3);
 //		System.out.println(csum4);
+	}
+	public static void assemble(Map map,List l){
+		for(int i=0;i<l.size();i++){
+			Object o=l.get(i);
+			if(l.get(i) instanceof Long){
+				Object o2=(map.get((Long)o));
+				if(o2 instanceof ArrayList){
+					String temp=(String) ((ArrayList)o2).get(0);
+					System.out.println("已存在"+temp);
+				}
+			}else if(l.get(i) instanceof String){
+				String temp=(String)o;
+				System.out.println("要添加"+temp);
+			}
+		}
 	}
 	public static long adler32(byte[] data){
 		long a = 0, b = 0;
