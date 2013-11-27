@@ -18,6 +18,7 @@ public class TestRsync {
 			String temp=line.substring(i*4,i*4+4);
 			System.out.println(temp);
 			long l=adler32(temp.getBytes());
+			System.out.println(l);
 			ArrayList<String> list2=null;
 			if(hm.containsKey(l)){
 				list2=(ArrayList<String>) hm.get(l);

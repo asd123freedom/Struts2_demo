@@ -64,6 +64,12 @@
          </action>
          <action name="FileList"  class="com.test.json.action.GetFileListAction">
               <result type="json"></result> 
-         </action>        
+         </action>
+         <action name="GetBlocks"  class="com.test.json.action.GetBlocksAction">
+              <result type="json"></result> 
+         </action>
+          <action name="Assemble"  class="com.test.json.action.AssembleAction">
+              <result type="json"></result> 
+         </action>          
     </package> 
 </struts>

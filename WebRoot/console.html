@@ -10,6 +10,7 @@
     <script language="javascript" type="text/javascript" src="js/backbone-0.9.10.js"></script>
     <script language="javascript" type="text/javascript" src="js/messenger.js"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/rsync/init.js" type="text/javascript"></script>
 </head>
 <script type="text/javascript">
 			var klass = function(Parent, props) {  
@@ -49,7 +50,7 @@
          				type: "POST",
          				data: {"path":"D:\\Workspaces\\branch\\HiServiceCRM\\src"},
          				success:function(data){
-         					console.log(data.files);
+         					//console.log(data.files);
          				}, 
 				});
 				$(".input").bind("keyup",function(event){
@@ -98,10 +99,26 @@
 		                var fr = new FileReader();  
 		                fr.onloadend = function(e) {
 		                	console.log(e.target.result);  
-		                    $(".content").text(e.target.result);
+		                    //$(".content").text(e.target.result);
 		                };  
 		                fr.readAsText(file);  
 		            }  
+				});
+				$(".btn.file").bind("click",function(){
+					$("input[type=file]").trigger("click");
+				});
+				$(".btn-warning").bind("click",function(){
+					var rsync=$(".navbar").data("test");
+					var array=rsync.test();
+					console.log(array);				
+					$.ajax({
+						url: "http://127.0.0.1:8080/struts2_demo/Assemble.action",
+         				type: "POST",
+         				data: {"array":array,'info':'asd'},
+         				success:function(data){
+         					//console.log(data.files);
+         				}, 
+					});					
 				});		
 			}); 
 </script>
@@ -134,9 +151,8 @@
 						</div>
   					</div>
   					<div class="span3">
-  						<button type="button" class="btn btn-info">Submit</button>
-  						<input type="file">
-  						<div class="content"></div>
+  						<button type="button" class="btn btn-info file">Submit</button>
+  						<input type="file" style="display:none">
   					</div>
   				</div>  			
     		</div>
