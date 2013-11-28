@@ -17,18 +17,10 @@ public class AssembleAction extends ActionSupport{
 		this.info = info;
 	}
 	public JSONObject json;
-	public Object[]  array;
+	public String  array;
 	public String execute() {
 		System.out.println(info);
 		if(array!=null){
-			for(int i=0;i<array.length;i++){
-				Object o=array[i];
-				if(o instanceof Long){
-					System.out.println("Long");
-				}else if(o instanceof String){
-					System.out.println("String");
-				}
-			}
 			return "success";
 		}else{
 			System.out.println("失败");
@@ -41,10 +33,10 @@ public class AssembleAction extends ActionSupport{
 	public void setJson(JSONObject json) {
 		this.json = json;
 	}
-	public Object[] getArray() {
+	public String getArray() {
 		return array;
 	}
-	public void setArray(Object[] array) {
+	public void setArray(String array) {
 		this.array = array;
 	}
 

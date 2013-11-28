@@ -83,12 +83,14 @@ public class GetFileListAction extends ActionSupport{
 		return;
 	}
 	public static void main(String[] args) {
-		GetFileListAction g=new GetFileListAction();
-		String path="D:\\Workspaces\\branch\\HiServiceCRM\\src";
-		g.setPath(path);
-		File file=new File(path);
-		g.getAllFiles(file);
-		System.out.println(max);
-		System.out.println(max1);
+		String m5="27be1a569ae8205c916f58a4e00111c9";
+		System.out.println(m5.length());
+//		GetFileListAction g=new GetFileListAction();
+//		String path="D:\\Workspaces\\branch\\HiServiceCRM\\src";
+//		g.setPath(path);
+//		File file=new File(path);
+//		g.getAllFiles(file);
+//		System.out.println(max);
+//		System.out.println(max1);
 	}
 }

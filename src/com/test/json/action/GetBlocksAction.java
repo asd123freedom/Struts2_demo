@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +15,15 @@ import com.opensymphony.xwork2.ActionSupport;
 public class GetBlocksAction extends ActionSupport{
 	private String info;
 	private ArrayList<Long> l;
+	private ArrayList<String> l_md5;
+	public ArrayList<String> getL_md5() {
+		return l_md5;
+	}
+	public void setL_md5(ArrayList<String> lMd5) {
+		l_md5 = lMd5;
+	}
 	private String path="E:\\Ubuntu_Tools\\Check_Tomcat.java";
-	public static int size=20;
+	public static int size=50;
 	public String getInfo() {
 		return info;
 	}
@@ -42,14 +50,19 @@ public class GetBlocksAction extends ActionSupport{
 		
 		StringBuffer sb=new StringBuffer("");
 		String line=br.readLine();
-		sb.append(line);
-		while(line!=null){
+		sb.append(line+"\r\n");
+		while(true){
 			line=br.readLine();
-			sb.append(line);
+			if(line==null){
+				break;
+			}
+			sb.append(line+"\r\n");
 		}
 		String content=sb.toString();
 		ArrayList<Long> list=new ArrayList<Long>();
+		ArrayList<String> list_md5=new ArrayList<String>(); 
 		Map hm=new HashMap<Long, ArrayList<String>>();
+		//System.out.println(content);
 		for(int i=0;i<content.length()/size;i++){
 			String temp=content.substring(i*size,i*size+size);
 			//System.out.println(temp);
@@ -64,8 +77,10 @@ public class GetBlocksAction extends ActionSupport{
 			list2.add(temp);
 			hm.put(l, list2);
 			list.add(l);
+			list_md5.add(MD5(temp));
 		}
 		this.l=list;
+		this.l_md5=list_md5;
 		String left=content.substring((content.length()/size)*size);
 		System.out.println(left);
 		} catch (Exception e) {
@@ -85,7 +100,6 @@ public class GetBlocksAction extends ActionSupport{
 	        b = (b + a) % MOD_ADLER;
 	        //System.out.println(b);
 	    }
-	 
 	    return (b << 16) | a;
 	}
 	public static long adler32_rolling_checksum(long csum, int len, byte c1,  
@@ -99,8 +113,34 @@ public class GetBlocksAction extends ActionSupport{
         s1 -= (c1 - c2);  
         s2 -= (len * c1 - s1); 
         s1=s1%MOD_ADLER;
+        System.out.println(s1);
         s2=s2%MOD_ADLER;
+        System.out.println(s2);
         return (s1 & 0xffff) + ((s2 & 0xffff) << 16);  
     }
-
+	public final static String MD5(String s) {
+        char hexDigits[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};       
+        try {
+            byte[] btInput = s.getBytes();
+            // 获得MD5摘要算法的 MessageDigest 对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(btInput);
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

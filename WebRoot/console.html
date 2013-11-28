@@ -10,6 +10,7 @@
     <script language="javascript" type="text/javascript" src="js/backbone-0.9.10.js"></script>
     <script language="javascript" type="text/javascript" src="js/messenger.js"></script>
     <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/rsync/md5.min.js" type="text/javascript"></script>
     <script src="js/rsync/init.js" type="text/javascript"></script>
 </head>
 <script type="text/javascript">
@@ -98,8 +99,10 @@
 					if(window.FileReader) {  
 		                var fr = new FileReader();  
 		                fr.onloadend = function(e) {
-		                	console.log(e.target.result);  
-		                    //$(".content").text(e.target.result);
+		                	//console.log(e.target.result);
+		                	$(".content").removeClass("hide");  
+		                    $(".content").text(e.target.result);
+		                    $(".content").data("str",e.target.result);
 		                };  
 		                fr.readAsText(file);  
 		            }  
@@ -109,14 +112,19 @@
 				});
 				$(".btn-warning").bind("click",function(){
 					var rsync=$(".navbar").data("test");
-					var array=rsync.test();
-					console.log(array);				
+					//var array=rsync.test();
+					//console.log(JSON.stringify(array));				
 					$.ajax({
-						url: "http://127.0.0.1:8080/struts2_demo/Assemble.action",
+						url: "http://127.0.0.1:8080/struts2_demo/GetBlocks.action",
          				type: "POST",
-         				data: {"array":array,'info':'asd'},
+         				data: {},
          				success:function(data){
          					//console.log(data.files);
+         					//console.log($(".content").data("str"));
+         					console.log(data.l);
+         					//console.log(data.l_md5);
+         					var res=rsync.send_blocks($(".content").data("str"),50,data.l,data.l_md5);
+         					console.log(res);
          				}, 
 					});					
 				});		
@@ -150,9 +158,10 @@
 						  </ul>
 						</div>
   					</div>
-  					<div class="span3">
+  					<div class="span6">
   						<button type="button" class="btn btn-info file">Submit</button>
   						<input type="file" style="display:none">
+  						<pre class="hide content"></pre>
   					</div>
   				</div>  			
     		</div>
