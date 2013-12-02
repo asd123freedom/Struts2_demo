@@ -12,7 +12,7 @@ import java.util.Map;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class GetBlocksAction extends ActionSupport{
+public class ByteBlocksAction extends ActionSupport{
 	private String info;
 	private ArrayList<Long> l;
 	private ArrayList<String> l_md5;
@@ -161,3 +161,4 @@ public class GetBlocksAction extends ActionSupport{
 		new GetBlocksAction().execute();
 	}
 }
+

@@ -5,12 +5,41 @@
 			this.type=1;
 			this.adler32=adler32;
 			this.MD5=MD5;
-		}
+		};
 		var commit=function(){
 			this.type=0;
 			this.content="";
 			this.start=0;
 			this.end=0;
+		};
+		var charset=function(file,size){
+			var pos=0;
+			console.log(file.size);
+			var buffersize=0; 
+			if(size==0 || size==null){				
+				buffersize=128;
+			}else{
+				buffersize=size;
+			}
+			if(buffersize>file.size){
+				buffersize=file.size;
+			}
+			onload=function(e){
+					console.log(e.target.result);
+				};
+			file2=file;
+			var blob=file.slice(10,40);
+			var r=new FileReader();
+			r.readAsText(blob);
+			r.onload=onload;
+			console.log(blob);
+			var blob=file.slice(40,40);
+			console.log(blob);
+			var r=new FileReader();
+			r.onload=onload;
+			r.readAsText(blob);
+			//console.log(blob);
+
 		}
 		var send_blocks=function(str,size,list,list_md5){
 				if(size==0 || size==null){
@@ -26,6 +55,7 @@
 				var end=0;
 				var list2=[];
 				var left2="";
+				var flag=true;
 				for(var i=0;i<b.length-size;){
 					var str="";
 					for(var j=0;j<size;j++){
@@ -33,20 +63,22 @@
 						str+=b[i+j];
 					}
 					//str=str+(b[i])+(b[i+1])+(b[i+2])+(b[i+3]);
-					if(i==0){
+					if(i==0 || flag){
 						checksum=adler32(str);
 					}else{
 						checksum=adler32_rolling_checksum(checksum,str.length,b[i-1],b[i+size-1]);
-						return;
 					}
 					var check2=adler32(str);
-					//console.log(str);
-					console.log(checksum===check2);
+					//console.log(str.length);
+					console.log(checksum);
 					var md5_value=md5(str);
 					if(contain(list,list_md5,checksum,md5_value)){
+						flag=true;
 						console.log("find:"+str);
 						end=i;
-						console.log("need to send:"+b.substring(start,end));
+						if(end!=start){
+							console.log("need to send:"+b.substring(start,end));
+						}
 						var add=b.substring(start,end);
 						var a=null;
 						if(add!=""){
@@ -68,71 +100,15 @@
 						left2=b.substr(start);
 						i=i+size;
 					}else{
+						console.log("not find:"+str);
+						flag=false;
 						i++;
 					}
 				}
-				console.log(left2);
-				console.log(list2);
+				//console.log(left2);
+				//console.log(list2);
 				return {'info':list2,'left':left2};
 		};
-		var test=function(){
-				var line="taohuiissoman";
-				//var b="itaohuiamsoman";
-				var b="taohuiissoman";
-				var list=[];
-				var list_md5=[];
-				var hm={};
-				for(var i=0;i<Math.floor(line.length/4);i++){
-					var temp=line.substring(i*4,i*4+4);
-					//console.log("slice"+i+":"+temp);
-					var l=adler32(temp);
-					var md5_value=md5(temp);
-					console.log(l);
-					var list2=[];
-					if(hm[l]!=null){
-						hm[l].push(temp);
-					}else{
-						hm.l=[];
-						hm.l.push(temp);
-					}
-					list.push(l);
-					list_md5.push(md5_value);
-				}
-				var left=line.substr(Math.floor(line.length/4)*4);
-				console.log(list_md5);
-				//console.log('left:'+left);
-				var checksum=0;
-				var start=0;
-				var end=0;
-				var list2=[];
-				var left2="";
-				for(var i=0;i<b.length-3;i++){
-					var str="";
-					str=str+(b[i])+(b[i+1])+(b[i+2])+(b[i+3]);
-					if(i==0){
-						checksum=adler32(str);
-					}else{
-						checksum=adler32_rolling_checksum(checksum,str.length,b[i-1],b[i+3]);
-					}
-					var value_md5=md5(str);
-					if(contain(list,list_md5,checksum,value_md5)){
-						console.log("find:"+str);
-						end=i;
-						if(end!=start){
-							console.log("need to send:"+b.substring(start,end));
-							var add=b.substring(start,end);
-							list2.push(add);
-						}
-						list2.push(checksum);
-						start=i+4;
-						left2=b.substr(start);
-					}
-				}
-				console.log(left2);
-				//console.log(list2);
-				//return {'info':list2,'left':Left2};
-				return list2;
-			};
 		var contain=function (arr,arr2,num,value_md5){
 						//console.log(arr);
 						//console.log(num);
@@ -163,19 +139,23 @@
 						var s2=0;
 						c1=c1.charCodeAt(0);
 						c2=c2.charCodeAt(0);
-						console.log(c1);
-						console.log(c2);
-						s1=(sum & 0xffff);
+						//console.log(c1);
+						//console.log(c2);
 						s2=Math.floor(sum / 65536);
+						s1=sum-s2;
 						s1-=(c1-c2);
 						s2-=(len*c1-s1);
 						s1=s1%MOD_ADLER;
 						s2=s2%MOD_ADLER;
-						console.log(s1);
-						console.log(s2);
+						//console.log(s1);
+						//console.log(s2);
 						return (s1 & 0xffff) + ((s2 & 0xffff) * 65536);
 					};
-		return {'test':test,'adler32':adler32,'rolling_checksum':adler32_rolling_checksum,'send_blocks':send_blocks};
+		return {'adler32':adler32,
+				'rolling_checksum':adler32_rolling_checksum,
+				'send_blocks':send_blocks,
+				'charset':charset,
+				};
 	})();
 	$(".navbar").data("test",Rsync);
 });

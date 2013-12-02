@@ -96,6 +96,9 @@
 				var input=$("input[type=file]");
 				input.bind("change",function(){
 					var file=this.files[0];
+					console.log(file);
+					$(".content").data("file",file);
+					/*
 					if(window.FileReader) {  
 		                var fr = new FileReader();  
 		                fr.onloadend = function(e) {
@@ -105,7 +108,10 @@
 		                    $(".content").data("str",e.target.result);
 		                };  
 		                fr.readAsText(file);  
-		            }  
+		            }
+		            */
+		            var rsync=$(".navbar").data("test");
+		            rsync.charset(file,20);  
 				});
 				$(".btn.file").bind("click",function(){
 					$("input[type=file]").trigger("click");
