@@ -14,7 +14,6 @@
 		};
 		var charset=function(file,size){
 			var pos=0;
-			console.log(file.size);
 			var buffersize=0; 
 			if(size==0 || size==null){				
 				buffersize=128;
@@ -25,21 +24,16 @@
 				buffersize=file.size;
 			}
 			onload=function(e){
-					console.log(e.target.result);
+					//console.log(e.target.result);
+					var str=e.target.result;
+					console.log(str);
+					var reg=/\ufffd/;
+					var arr=str.match(reg);
+					console.log(arr);
 				};
-			file2=file;
-			var blob=file.slice(10,40);
 			var r=new FileReader();
-			r.readAsText(blob);
+			r.readAsText(file);
 			r.onload=onload;
-			console.log(blob);
-			var blob=file.slice(40,40);
-			console.log(blob);
-			var r=new FileReader();
-			r.onload=onload;
-			r.readAsText(blob);
-			//console.log(blob);
-
 		}
 		var send_blocks=function(str,size,list,list_md5){
 				if(size==0 || size==null){
