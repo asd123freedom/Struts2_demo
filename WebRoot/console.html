@@ -96,8 +96,7 @@
 				var input=$("input[type=file]");
 				input.bind("change",function(){
 					var file=this.files[0];
-					$(".content").data("file",file);
-					/*
+					$(".content").data("fileName",file.name);
 					if(window.FileReader) {  
 		                var fr = new FileReader();  
 		                fr.onloadend = function(e) {
@@ -108,7 +107,6 @@
 		                };  
 		                fr.readAsText(file);  
 		            }
-		            */
 		            var rsync=$(".navbar").data("test");
 		            rsync.charset(file,20);  
 				});
@@ -122,7 +120,7 @@
 					$.ajax({
 						url: "http://127.0.0.1:8080/struts2_demo/GetBlocks.action",
          				type: "POST",
-         				data: {},
+         				data: {"fileName":$(".content").data("fileName")},
          				success:function(data){
          					//console.log(data.files);
          					//console.log($(".content").data("str"));
@@ -132,7 +130,44 @@
          					console.log(res);
          				}, 
 					});					
-				});		
+				});
+				$(".btn-danger").bind("click",function(){
+					var rsync=$(".navbar").data("test");
+					//var array=rsync.test();
+					//console.log(JSON.stringify(array));				
+					$.ajax({
+						url: "http://127.0.0.1:8080/struts2_demo/GetBlocks.action",
+         				type: "POST",
+         				data: {"fileName":$(".content").data("fileName")},
+         				success:function(data){
+         					//console.log(data.files);
+         					//console.log($(".content").data("str"));
+         					console.log(data.l);
+         					//console.log(data.l_md5);
+         					var res=rsync.send_blocks1($(".content").data("str"),50,data.l,data.l_md5);
+         					$(".navbar").data("result",res);
+         					$(".btn-danger").trigger("assemble");
+         				}, 
+					});					
+				});
+				$(".btn-danger").bind("assemble",function(){
+					//var array=rsync.test();
+					//console.log(JSON.stringify(array));
+					console.log($(".navbar").data("result"));			
+					$.ajax({
+						url: "http://127.0.0.1:8080/struts2_demo/Assemble.action",
+         				type: "POST",
+         				data: {json:$(".navbar").data("result"),info:"asd"},
+         				success:function(data){
+         					//console.log(data.files);
+         					//console.log($(".content").data("str"));
+         					//console.log(data.l);
+         					//console.log(data.l_md5);
+         					//var res=rsync.send_blocks1($(".content").data("str"),50,data.l,data.l_md5);
+         					//console.log(res);
+         				}, 
+					});					
+				});				
 			}); 
 </script>
   <body>
@@ -155,7 +190,7 @@
   					</div>
   					<div class="span3">
   						<input type="text" class="span9 input" style="margin-bottom:5px"/>
-  						<button type="button" class="btn btn-warning" style="margin-bottom:5px">Submit</button>
+  						<button type="button" class="btn btn-warning" style="margin-bottom:5px">方法1</button>
   						<div class="dropdown"> 						  						
 						  <!-- Link or button to toggle dropdown -->
 						  <ul class="dropdown-menu">
@@ -165,6 +200,7 @@
   					</div>
   					<div class="span6">
   						<button type="button" class="btn btn-info file">Submit</button>
+  						<button type="button" class="btn btn-danger">方法2</button>
   						<input type="file" style="display:none">
   						<pre class="hide content"></pre>
   					</div>

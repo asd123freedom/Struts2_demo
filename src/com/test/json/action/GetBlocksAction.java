@@ -10,12 +10,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class GetBlocksAction extends ActionSupport{
 	private String info;
 	private ArrayList<Long> l;
 	private ArrayList<String> l_md5;
+	private String fileName;
+	public static File file=new File("D:\\struts2_demo");
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public ArrayList<String> getL_md5() {
 		return l_md5;
 	}
@@ -43,6 +52,8 @@ public class GetBlocksAction extends ActionSupport{
 		this.path = path;
 	}
 	public String execute(){
+		//System.out.println(fileName);
+		getFilePath(fileName,file);
 		File file=new File(path);
 		BufferedReader br=null;
 		try {
@@ -61,7 +72,7 @@ public class GetBlocksAction extends ActionSupport{
 		char[] content=sb.toString().toCharArray();
 		ArrayList<Long> list=new ArrayList<Long>();
 		ArrayList<String> list_md5=new ArrayList<String>(); 
-		Map hm=new HashMap<Long, ArrayList<String>>();
+		Map<String, String> hm=new HashMap<String, String>();
 		//System.out.println(content);
 		for(int i=0;i<content.length-size;i+=size){
 			char[] temp=new char[size];
@@ -76,16 +87,13 @@ public class GetBlocksAction extends ActionSupport{
 			//System.out.println(temp.getBytes().length);
 			long l=adler32(temp);
 			//System.out.println(l);
-			ArrayList<String> list2=null;
-			if(hm.containsKey(l)){
-				list2=(ArrayList<String>) hm.get(l);
-			}else{
-				list2=new ArrayList<String>();
-			}
-			list2.add(str);
-			hm.put(l, list2);
 			list.add(l);
-			list_md5.add(MD5(str));
+			String m5=MD5(str);
+			list_md5.add(m5);
+			hm.put(m5, str);
+			if(ActionContext.getContext().getSession().get("Blocklist")==null){
+				ActionContext.getContext().getSession().put("list",hm);
+			}
 		}
 		this.l=list;
 		this.l_md5=list_md5;
@@ -158,6 +166,27 @@ public class GetBlocksAction extends ActionSupport{
         }
     }
 	public static void main(String[] args) {
-		new GetBlocksAction().execute();
+		GetBlocksAction gb=new GetBlocksAction();
+		gb.setFileName("TestGBK.java");
+		gb.execute();
+	}
+	public void getFilePath(String name,File file){
+		File[] arr=file.listFiles();
+		for(int i=0;i<arr.length;i++){
+			if(arr[i].isHidden()){
+				//System.out.println(arr[i].getName());
+				continue;
+			}
+			//System.out.println(arr[i].getName());
+			if(arr[i].isFile() && arr[i].getName().equals(name)){
+				this.path=arr[i].getAbsolutePath();
+				System.out.println(path);
+				return;
+				//System.out.println(arr[i].getName());
+			}else if(arr[i].isDirectory()){
+				getFilePath(name,arr[i]);
+			}
+		}		
+		return;
 	}
 }

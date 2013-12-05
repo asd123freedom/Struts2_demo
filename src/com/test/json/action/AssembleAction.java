@@ -20,12 +20,13 @@ public class AssembleAction extends ActionSupport{
 	public String  array;
 	public String execute() {
 		System.out.println(info);
-		if(array!=null){
-			return "success";
-		}else{
-			System.out.println("失败");
+		if(json==null){
+			System.out.println("asd");
 			return "success";
 		}
+		JSONArray ja=json.getJSONArray("info");
+		System.out.println(ja.size());
+		return "success";
 	}
 	public JSONObject getJson() {
 		return json;

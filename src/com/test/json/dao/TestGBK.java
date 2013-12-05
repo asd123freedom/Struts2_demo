@@ -60,7 +60,7 @@ public class TestGBK {
 		            code = "UTF-16";  
 		        if (head[0] == -2 && head[1] == -1 )  
 		            code = "Unicode";
-		        //��BOM
+		        //包涵BOM
 		        if(head[0]==-17 && head[1]==-69 && head[2] ==-65)  
 		            code = "UTF-8";  
 		        if("Unicode".equals(code)){
