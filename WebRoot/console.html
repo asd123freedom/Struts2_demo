@@ -153,11 +153,12 @@
 				$(".btn-danger").bind("assemble",function(){
 					//var array=rsync.test();
 					//console.log(JSON.stringify(array));
-					console.log($(".navbar").data("result"));			
+					console.log($(".navbar").data("result"));
+					var obj=$(".navbar").data("result");			
 					$.ajax({
 						url: "http://127.0.0.1:8080/struts2_demo/Assemble.action",
          				type: "POST",
-         				data: {json:$(".navbar").data("result"),info:"asd"},
+         				data: {info:JSON.stringify(obj)},
          				success:function(data){
          					//console.log(data.files);
          					//console.log($(".content").data("str"));

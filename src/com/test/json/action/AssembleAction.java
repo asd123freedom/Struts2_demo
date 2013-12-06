@@ -16,22 +16,18 @@ public class AssembleAction extends ActionSupport{
 	public void setInfo(String info) {
 		this.info = info;
 	}
-	public JSONObject json;
+	public Object json;
 	public String  array;
 	public String execute() {
-		System.out.println(info);
-		if(json==null){
-			System.out.println("asd");
-			return "success";
-		}
-		JSONArray ja=json.getJSONArray("info");
+		JSONObject jo=JSONObject.fromObject(info);
+		JSONArray ja=JSONArray.fromObject(jo.get("info"));
 		System.out.println(ja.size());
 		return "success";
 	}
-	public JSONObject getJson() {
+	public Object getJson() {
 		return json;
 	}
-	public void setJson(JSONObject json) {
+	public void setJson(Object json) {
 		this.json = json;
 	}
 	public String getArray() {
