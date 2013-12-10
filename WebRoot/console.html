@@ -55,7 +55,7 @@
          				}, 
 				});
 				$(".input").bind("keyup",function(event){
-					console.log(event);
+					//console.log(event);
 					var txt=$(this).val();
 					console.log(txt);
 					var reg=/\w+/;
@@ -78,13 +78,15 @@
          						return;
          					}
          					for(var i=0;i<arr.length;i++){
-         						var $li=$("ul.dropdown-menu").find("li.temple").clone();
+         						var $li=$("ul.dropdown-menu").find("li.temple:eq(0)").clone();
          						$li.find("a").text(arr[i]);
          						$li.removeClass("temple");
          						$li.removeClass("hide");
          						$li.appendTo($("ul.dropdown-menu"));
          					}
-         					$(".dropdown").addClass("open");
+         					if(!$(".dropdown").hasClass("open")){         					
+         						$(".dropdown").addClass("open");
+         					}
          				}, 
 					});
 				});
@@ -113,24 +115,6 @@
 				$(".btn.file").bind("click",function(){
 					$("input[type=file]").trigger("click");
 				});
-				$(".btn-warning").bind("click",function(){
-					var rsync=$(".navbar").data("test");
-					//var array=rsync.test();
-					//console.log(JSON.stringify(array));				
-					$.ajax({
-						url: "http://127.0.0.1:8080/struts2_demo/GetBlocks.action",
-         				type: "POST",
-         				data: {"fileName":$(".content").data("fileName")},
-         				success:function(data){
-         					//console.log(data.files);
-         					//console.log($(".content").data("str"));
-         					console.log(data.l);
-         					//console.log(data.l_md5);
-         					var res=rsync.send_blocks($(".content").data("str"),50,data.l,data.l_md5);
-         					console.log(res);
-         				}, 
-					});					
-				});
 				$(".btn-danger").bind("click",function(){
 					var rsync=$(".navbar").data("test");
 					//var array=rsync.test();
@@ -144,7 +128,7 @@
          					//console.log($(".content").data("str"));
          					console.log(data.l);
          					//console.log(data.l_md5);
-         					var res=rsync.send_blocks1($(".content").data("str"),50,data.l,data.l_md5);
+         					var res=rsync.send_blocks($(".content").data("str"),50,data.l,data.l_md5);
          					$(".navbar").data("result",res);
          					$(".btn-danger").trigger("assemble");
          				}, 
@@ -160,12 +144,7 @@
          				type: "POST",
          				data: {info:JSON.stringify(obj)},
          				success:function(data){
-         					//console.log(data.files);
-         					//console.log($(".content").data("str"));
-         					//console.log(data.l);
-         					//console.log(data.l_md5);
-         					//var res=rsync.send_blocks1($(".content").data("str"),50,data.l,data.l_md5);
-         					//console.log(res);
+							
          				}, 
 					});					
 				});				
@@ -189,9 +168,9 @@
   				<div class="row-fluid">
   					<div class="span1">
   					</div>
-  					<div class="span3">
+  					<div class="span5">
   						<input type="text" class="span9 input" style="margin-bottom:5px"/>
-  						<button type="button" class="btn btn-warning" style="margin-bottom:5px">方法1</button>
+  						<button type="button" class="btn btn-warning" style="margin-bottom:5px">查找文件</button>
   						<div class="dropdown"> 						  						
 						  <!-- Link or button to toggle dropdown -->
 						  <ul class="dropdown-menu">
@@ -200,13 +179,13 @@
 						</div>
   					</div>
   					<div class="span6">
-  						<button type="button" class="btn btn-info file">Submit</button>
-  						<button type="button" class="btn btn-danger">方法2</button>
+  						<button type="button" class="btn btn-info file">上传文件</button>
+  						<button type="button" class="btn btn-danger">同步</button>
   						<input type="file" style="display:none">
   						<pre class="hide content"></pre>
   					</div>
   				</div>  			
     		</div>
-  		</div>  		  		  
+  		</div>   		  		  
   </body>
 </html>

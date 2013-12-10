@@ -45,7 +45,7 @@
 			};
 			*/
 		}
-		var send_blocks1=function(str,size,list,list_md5){
+		var send_blocks=function(str,size,list,list_md5){
 				var disc=$(".content").data("disc");
 				if(size==0 || size==null){
 					size=20;
@@ -93,7 +93,7 @@
 						}
 						var b1=new block();
 						b1.adler32=checksum;
-						b1.MD5=md5_value;
+						b1.MD5=md5_value.toUpperCase();
 						//console.log(add);
 						var find=checksum;
 						if(a!=null){
@@ -113,6 +113,7 @@
 				//console.log(list2);
 				return {'info':list2,'left':left2};
 		};
+		/*
 		var send_blocks=function(str,size,list,list_md5){
 				var disc={};
 				if(size==0 || size==null){
@@ -145,7 +146,7 @@
 					console.log(str);
 					console.log(checksum);
 					disc[str]=checksum;
-					//console.log(disc);
+					console.log(disc);
 					var md5_value=md5(str);
 					if(contain(list,list_md5,checksum,md5_value)){
 						flag=true;
@@ -183,7 +184,7 @@
 				console.log(disc);
 				$(".content").data("disc",disc);
 				return {'info':list2,'left':left2};
-		};
+		};*/
 		var contain=function (arr,arr2,num,value_md5){
 						//console.log(arr);
 						//console.log(num);
@@ -234,7 +235,6 @@
 				'rolling_checksum':adler32_rolling_checksum,
 				'send_blocks':send_blocks,
 				'charset':charset,
-				'send_blocks1':send_blocks1,
 				};
 	})();
 	$(".navbar").data("test",Rsync);

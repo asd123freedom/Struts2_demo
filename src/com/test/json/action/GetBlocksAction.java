@@ -55,6 +55,7 @@ public class GetBlocksAction extends ActionSupport{
 		//System.out.println(fileName);
 		getFilePath(fileName,file);
 		File file=new File(path);
+		ActionContext.getContext().getSession().put("path",path);
 		BufferedReader br=null;
 		try {
 			br=new BufferedReader(new InputStreamReader(new FileInputStream(file)));
@@ -92,7 +93,7 @@ public class GetBlocksAction extends ActionSupport{
 			list_md5.add(m5);
 			hm.put(m5, str);
 			if(ActionContext.getContext().getSession().get("Blocklist")==null){
-				ActionContext.getContext().getSession().put("list",hm);
+				ActionContext.getContext().getSession().put("Blocklist",hm);
 			}
 		}
 		this.l=list;
