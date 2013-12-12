@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+   	<title>文件管理</title>
 	<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 	<script language="javascript" type="text/javascript" src="js/jquery-1.9.1.js"></script>
@@ -44,13 +45,19 @@
         		},
         		drop: function (e, data) {
         			//$("li:not('.template')").remove();
-        			console.log(data);
+        			//console.log(data);
        				$.each(data.files, function (index, file) {
             		//alert('Dropped file: ' + file.name);
-            			console.log(file);
+            			//if(file.name[length-1]!="/"){
+            			if(file.relativePath.indexOf("WebRoot")>=0){
+            				console.log(file.name);
+            			}
+            			var start=file.relativePath.indexOf("/");
+            			var str=file.relativePath.substr(start);
+            			//console.log(str);
             			$li=$("li.template").clone();
             			//$("ul").remove($("li not('.template')"));
-            			$li.text(file.name).appendTo($("ul.files")).removeClass("hide").removeClass("template");
+            			//$li.text(file.name).appendTo($("ul.files")).removeClass("hide").removeClass("template");
         			});
     			},
     			progressall: function (e, data) {
@@ -66,18 +73,83 @@
 	</script>
   </head>  
   <body>
+  		<div class="navbar" style="margin-bottom:0px;">
+		  <div class="navbar-inner" style="border-radius:0px;">
+  			<div class="container" style="max-width:1000px">
+		    	<a class="brand" href="#">DK</a>
+		    	<a class="btn btn-info disabled" style="" href="#"><i class="icon-star icon-white"></i> Star</a>
+			    <form class="navbar-form pull-right">
+				  <input type="text" class="span2" placeholder="Email">
+				  <input type="password" class="span2" placeholder="PassWord">
+				  <button type="submit" class="btn">Submit</button>
+				  
+				</form>
+				</div>
+		  </div>
+		</div>
     <span class="btn btn-success fileinput-button">
          <span>Add files...</span>
          <input type="file" name="grand" id="fileupload">
     </span>
 	<!-- The main application script -->
 	<!--script src="jquery-upload/main.js"></script-->
-	<ul class="files">
-		<li class="hide template">1</li>
-	</ul>
 	<button class="hide btn btn-info upload" type="button">test</button>
 	<div class="progress" style="display:none">
   		<div class="bar" style="width: 0%;"></div>
 	</div>
-  </body>
+	<div class="main" style="position:relative">
+		<div class="menu" style="position:absolute;
+		top:0px;left:0px;
+		background-color:rgb(247, 247, 247);
+		width:209px;
+		height:690px;
+		border:1px solid rgb(198, 200, 204);
+		">
+	  						<ul class="nav nav-list" style="margin-left:auto;margin-right:auto">
+	  							<li><a href="#"><i class="icon-home"></i> 首页</a></li>
+	  							<li><a href="#"><i class="icon-book"></i> Library</a></li>
+	 							<li><a href="#"><i class="icon-pencil"></i> Applications</a></li>
+	  							<li><a href="#"><i class="icon-th-large"></i> Misc</a></li>
+							</ul>
+						</div>
+	<div class="section" style="margin-left:210px">
+		<div class="header" style="
+		background-color: #F2F6FF;
+		border: 1px solid #d2d2d2;
+		height:39px;
+		">
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style="width:60%">#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	</div>
+	</body>
 </html>
