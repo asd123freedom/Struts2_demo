@@ -27,15 +27,27 @@
 					//console.log(e.target.result);
 					var str=e.target.result;
 					//console.log(str);
-					var reg=/\ufffd/;
+					var reg=/\ufffd/g;
 					var arr=str.match(reg);
+					var tmp=[];
+					tmp.push(str);
+					var blob = new Blob(tmp, { type: "text/plain" });
+					var ObjectURL=window.URL.createObjectURL(blob);
+					console.log(ObjectURL);
+					//location.href=ObjectURL;
+					$("a.download").attr("href",ObjectURL);
+					$("a.download").attr("download","testfordown.txt");
+					$("a.download").trigger("click");
+					//window.URL.revokeObjectURL(ObjectURL);
 					if(arr){						
-						console.log(arr.length);
+						console.log(arr);
+						console.log("字符集不符合")
+						console.log(str);
 					}
 				};
 			var r=new FileReader();
 			r.onload=onload;
-			r.readAsText(file);
+			r.readAsText(file,"gbk");
 			/*
 			var blob=file.slice(0,4);
 			var r=new FileReader();

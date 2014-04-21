@@ -15,6 +15,15 @@ public class UploadFileAction extends ActionSupport {
 	private String grandContentType;
 	private String savePath;
 	private String folderName;
+	private String relativePath;
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
+	}
+
 	public String getFolderName() {
 		return folderName;
 	}
@@ -54,16 +63,14 @@ public class UploadFileAction extends ActionSupport {
 	public void setGrandContentType(String grandContentType) {
 		this.grandContentType = grandContentType;
 	}
-	public void test(){
-		System.out.println("新建文件夹");
-	}
 	public String execute(){
 		try {
-			String path=getSavePath()+"\\"+folderName;
+			String path=getSavePath()+"\\"+relativePath;
 			File temp=new File(path);
 			if(!temp.exists()){
 				temp.mkdirs();
 			}
+			System.out.println(path);
 			FileOutputStream fos=new FileOutputStream(path+"\\"+getGrandFileName());
 			FileInputStream fis;
 			fis = new FileInputStream(getGrand());

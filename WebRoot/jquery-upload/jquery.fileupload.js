@@ -1014,6 +1014,7 @@
                     return that._handleFileTreeEntry(entry, path);
                 })
             ).pipe(function () {
+            	console.log(arguments);
                 return Array.prototype.concat.apply(
                     [],
                     arguments
@@ -1130,10 +1131,12 @@
             var that = this,
                 dataTransfer = e.dataTransfer,
                 data = {};
+            //console.log(dataTransfer.files);
             if (dataTransfer && dataTransfer.files && dataTransfer.files.length) {
                 e.preventDefault();
                 this._getDroppedFiles(dataTransfer).always(function (files) {
                     data.files = files;
+                    console.log(files);
                     if (that._trigger('drop', e, data) !== false) {
                         that._onAdd(e, data);
                     }

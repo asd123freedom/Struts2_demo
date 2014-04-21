@@ -50,6 +50,12 @@
     <action name="FileList" location="0,0" size="0,0">
       <result name="success" />
     </action>
+    <action name="GetBlocks" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
+    <action name="Assemble" location="0,0" size="0,0">
+      <result name="success" />
+    </action>
   </package>
   <webResource name="error.jsp" path="/error.jsp" location="100,205" size="150,55" />
   <webResource name="index.jsp" path="/index.jsp" location="200,350" size="150,55" />

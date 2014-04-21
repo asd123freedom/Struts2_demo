@@ -45,7 +45,37 @@
         <pathelement location="WebRoot/WEB-INF/lib/slf4j-nop-1.6.1.jar"/>
         <pathelement location="WebRoot/WEB-INF/lib/ant-1.6.5.jar"/>
     </path>
+    <path id="run.AssembleAction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
     <path id="run.execShell.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.GetBlocksAction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.GetFileListAction.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.TestGBK.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.TestInOut.bootclasspath">
+        <fileset dir="${java.home}/lib" includes="*.jar"/>
+        <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
+        <path refid="Java EE 5 Libraries.libraryclasspath"/>
+    </path>
+    <path id="run.TestRsync (1).bootclasspath">
         <fileset dir="${java.home}/lib" includes="*.jar"/>
         <fileset dir="${java.home}/lib/ext" includes="*.jar"/>
         <path refid="Java EE 5 Libraries.libraryclasspath"/>
@@ -91,11 +121,59 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
+    <target name="AssembleAction">
+        <java classname="com.test.json.action.AssembleAction" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.AssembleAction.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
     <target name="execShell">
         <java classname="com.test.json.dao.execShell" failonerror="true" fork="yes">
             <classpath refid="struts2_demo.classpath"/>
             <bootclasspath>
                 <path refid="run.execShell.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="GetBlocksAction">
+        <java classname="com.test.json.action.GetBlocksAction" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.GetBlocksAction.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="GetFileListAction">
+        <java classname="com.test.json.action.GetFileListAction" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.GetFileListAction.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="TestGBK">
+        <java classname="com.test.json.dao.TestGBK" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestGBK.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="TestInOut">
+        <java classname="com.test.json.dao.TestInOut" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestInOut.bootclasspath"/>
+            </bootclasspath>
+        </java>
+    </target>
+    <target name="TestRsync (1)">
+        <java classname="com.test.json.dao.TestRsync" failonerror="true" fork="yes">
+            <classpath refid="struts2_demo.classpath"/>
+            <bootclasspath>
+                <path refid="run.TestRsync (1).bootclasspath"/>
             </bootclasspath>
         </java>
     </target>

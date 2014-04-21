@@ -1,0 +1,76 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>MVC</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0"/> 
+    <!-- link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"-->
+    <script language="javascript" type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<style type="text/css">
+		@import url("bootstrap/css/bootstrap.min.css");
+		.myCarousel img {
+			max-height:100%
+		}
+	</style> 
+  </head>
+  <script type="text/javascript">
+  	$(function(){
+  		var Events={
+  			bind:function(){
+  				if(!this.o) this.o=$({});
+  				this.o.bind.apply(this.o,arguments);
+  				console.log("bind");
+  			},
+  			trigger:function(){
+  				if(!this.o) this.o=$({});
+  				this.o.trigger.apply(this.o,arguments);
+  				console.log("trigger");
+  			}
+  		}
+  		var StateMachine = function(){};
+  		StateMachine.fn=StateMachine.prototype;
+  		$.extend(StateMachine.fn,Events);
+  		StateMachine.fn.add=function(controller){
+  			this.bind("change",function(e,current){
+  				if(controller==current){
+  					controller.activate();
+  				}else{
+  					controller.deactivate();
+  				}
+  			});
+  			controller.active=$.proxy(function(){
+  				this.trigger("change",controller);
+  			},this);
+  		};
+  		var con1={
+  			activate:function(){
+  				console.log("con1 has been actived");
+  			},
+  			deactivate:function(){
+  				console.log("con1 has not been actived")
+  			}
+  		}
+  		var con2={
+  			activate:function(){
+  				console.log("con2 has been actived");
+  			},
+  			deactivate:function(){
+  				console.log("con2 has not been actived")
+  			}
+  		}
+  		var sm=new StateMachine();
+  		sm.add(con1);
+  		sm.add(con2);
+  		con1.active();
+  		con2.active();
+  	});
+  </script>
+  <body style="margin:0px;padding:0px;">
+   <h1>Test For MVC</h1>
+   <button type="button" class="btn btn-primary navbar-btn">DK加油</button>
+  </body>
+</html>

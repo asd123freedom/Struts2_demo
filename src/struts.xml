@@ -3,7 +3,7 @@
           "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
           "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<constant name="struts.multipart.maxSize" value="10485760"/>
+	<constant name="struts.multipart.maxSize" value="20485760"/>
 	<package name="struts2" extends="struts-default">
 	 <action name="login" class="com.ascent.struts2.action.LoginAction">
 	 	<interceptor-ref name="logger"/>
@@ -33,7 +33,7 @@
             </result> 
         </action>
      	<action name="uploadFile" class="com.test.json.action.UploadFileAction">
-     		<param name="savePath">/transfer</param>
+     		<param name="savePath">/deployment</param>
      		<result type="json"></result>
 		</action>
 		<action name="download" class="com.test.json.action.DownloadAction">
